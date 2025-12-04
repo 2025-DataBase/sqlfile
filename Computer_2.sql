@@ -137,7 +137,21 @@ CREATE TABLE IF NOT EXISTS `Computer_2`.`Battle` (
   `location` VARCHAR(100) NOT NULL,
   `civilian_killed` BIGINT NOT NULL,
   `civilian_injured` BIGINT NOT NULL,
-  PRIMARY KEY (`mission_id`, `battle_seq`))
+  PRIMARY KEY (`mission_id`, `battle_seq`),
+  
+  -- Mission 테이블 참조 외래 키 추가
+  CONSTRAINT `fk_battle_mission_id`
+    FOREIGN KEY (`mission_id`)
+    REFERENCES `Computer_2`.`Mission` (`mission_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    
+    CONSTRAINT `fk_battle_demon_id`
+    FOREIGN KEY (`demon_id`)
+    REFERENCES `Computer_2`.`Demon` (`demon_id`)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE
+  )
 ENGINE = InnoDB;
 
 -- B. 외래키(FK) & 조인 성능 최적화
